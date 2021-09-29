@@ -131,9 +131,7 @@ export default class Dashboard extends Component {
                   {/* small box */}
                   <div className="small-box bg-white">
                     <div className="inner">
-                      <p className="f-400 tx-small mg-b-0">Conversion Rate</p>
-                      <h3 className="pd-t-10">50% <span class="badge bg-success text-success tx-small badge-span">5%</span></h3>
-                      <CardConversionchart />
+                       <CardConversionchart />
                     </div>
                   </div>
                 </div>

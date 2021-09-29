@@ -24,7 +24,7 @@ export default class CardInstallchart extends Component {
 let chart = am4core.create("installcard", am4charts.XYChart);
 axios.get('http://10.0.0.238/icogz/appflyer').then((response) => 
         {
-          let total_install_count = response.data.data.query.total
+          let total_install_count = response.data.data.data_query_set.install_count
           let date = response.data.data.data_query_set.all_data;
           let date_count =response.data.data.data_query_set.all_data.length;
           //console.log('here :-'+total_impressions);
@@ -36,7 +36,7 @@ axios.get('http://10.0.0.238/icogz/appflyer').then((response) =>
             {
                var info = {
                 "date":date[i][0],
-                "value":date[i][1]
+                "value":date[i][4]
                };
                data.push(info);
             }

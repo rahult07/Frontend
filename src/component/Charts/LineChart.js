@@ -13,7 +13,6 @@ export default class LineChart extends Component {
         am4core.useTheme(am4themes_animated);
         // Create chart instance
         let chart = am4core.create("impressions", am4charts.XYChart);
-
         // Add data
         chart.data = [
             { date: new Date(2021, 5, 12), value1: 50, value2: 48, previousDate: new Date(2021, 5, 5) },
