@@ -30,6 +30,7 @@ export default class GoogleCampaignTable extends Component {
         //     })
         axios.get('http://10.0.0.238/icogz/appflyer').then((response) => {
           let table = response.data.data.table.table_data;
+          //console.log('params :-'+table);
           //console.log('here is table :-'+table);
           // let data_length =table.length;
           // console.log(data_length);
