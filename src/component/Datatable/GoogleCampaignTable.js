@@ -11,24 +11,7 @@ export default class GoogleCampaignTable extends Component {
     }
   }
     componentDidMount() {
-        // console.log(this.el)
-        // this.$el = $(this.el)
-        // this.$el.DataTable(
-            
-        //     {
-        //         data: this.props.data,
-        //         "lengthChange": false,
-        //         "language":{searchPlaceholder: "Search..."},
-        //         columns: [
-        //             { title: "Google Campaigns" },
-        //             { title: "Impressions" },
-        //             { title: "Clicks" },
-        //             { title: "CTR%" },
-        //             { title: "Spend" },
-        //             { title: "Installs" },
-        //            ]
-        //     })
-        axios.get('http://10.0.0.238/icogz/appflyer').then((response) => {
+          axios.get('http://10.0.0.238/icogz/appflyer').then((response) => {
           let table = response.data.data.table.table_data;
           //console.log('params :-'+table);
           //console.log('here is table :-'+table);
@@ -69,6 +52,27 @@ export default class GoogleCampaignTable extends Component {
           }
 
 
+        console.log(this.el)
+        this.$el = $(this.el)
+        this.$el.DataTable(
+            
+            {
+                data: this.props.data,
+                "lengthChange": false,
+                "language":{searchPlaceholder: "Search..."},
+                 "paging": true,
+                 "pageLength": 5
+                // columns: [
+                //     { title: "Google Campaigns" },
+                //     { title: "Impressions" },
+                //     { title: "Clicks" },
+                //     { title: "CTR%" },
+                //     { title: "Spend" },
+                //     { title: "Installs" },
+                //    ]
+            }
+            )
+    
 
         })
 
@@ -85,7 +89,7 @@ export default class GoogleCampaignTable extends Component {
     render() {
         return (
             <div className="table-responsive pd-t-20">
-              <table id="#google" className="display" width="100%">
+              <table id="#google" className="display" width="100%" ref={el => this.el = el}>
                                  <thead>
                                     <tr>
                                       <th>Date</th>

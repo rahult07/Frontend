@@ -5,23 +5,7 @@ $.DataTable = require('datatables.net')
 
 export default class FacebookCampaignTable extends Component {
     componentDidMount() {
-        // console.log(this.el)
-        // this.$el = $(this.el)
-        // this.$el.DataTable(
-            
-        //     {
-        //         data: this.props.data,
-        //         "lengthChange": false,
-        //         "language":{searchPlaceholder: "Search..."},
-        //         columns: [
-        //             { title: "Facebook Campaigns" },
-        //             { title: "Impressions" },
-        //             { title: "Clicks" },
-        //             { title: "CTR%" },
-        //             { title: "Spend" },
-        //             { title: "Installs" },
-        //            ]
-        //     })
+       
       //  ,{ params: {Media_Source: 'Facebook' }}
       axios.get('http://10.0.0.238/icogz/appflyer',{ params: {Media_Source: 'Facebook' }}).then((response) => {
           let table = response.data.data.table.table_data;
@@ -62,6 +46,25 @@ export default class FacebookCampaignTable extends Component {
                 $(".facebook_tbody").append(tr);              
 
           }
+           console.log(this.el)
+        this.$el = $(this.el)
+        this.$el.DataTable(
+            
+            {
+                data: this.props.data,
+                "lengthChange": false,
+                "language":{searchPlaceholder: "Search..."},
+                "paging": true,
+                 "pageLength": 5
+                // columns: [
+                //     { title: "Facebook Campaigns" },
+                //     { title: "Impressions" },
+                //     { title: "Clicks" },
+                //     { title: "CTR%" },
+                //     { title: "Spend" },
+                //     { title: "Installs" },
+                //    ]
+            })
 
 
 

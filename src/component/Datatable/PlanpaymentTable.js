@@ -1,10 +1,32 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import axios from 'axios';
 const $ = require('jquery')
 $.DataTable = require('datatables.net')
 
 export default class PlanpaymentTable extends Component {
   componentDidMount() {
-    console.log(this.el)
+    
+    axios.get('http://10.0.0.238/icogz/clevertap').then((response) => {
+      let table = response.data.data.data.table_data;
+      //console.log('heree :-'+table);
+      $(".payment_tbody").html("");
+      for(var index in table) {
+            //console.log("=========", table[index]);
+            var list = table[index]
+            var tr = '<tr>';
+                tr += '<td>'+list['date']+'</td>';       
+                tr += '<td>'+list['payment_plan']+'</td>';       
+                tr += '<td>'+list['event_count']+'</td>';       
+                tr += '<td>'+list['people_count']+'</td>';       
+                tr += '<td>'+list['success_count']+'</td>';
+                tr += '<td>'+list['success %']+'%'+'</td>';       
+                tr += '<td>'+list['sale']+'</td>';       
+                tr += '</tr>';
+
+                $(".payment_tbody").append(tr);              
+
+          }
+           console.log(this.el)
     this.$el = $(this.el)
     this.$el.DataTable(
 
@@ -12,18 +34,22 @@ export default class PlanpaymentTable extends Component {
         data: this.props.data,
         "lengthChange": false,
         "language": { searchPlaceholder: "Search..." },
-        columns: [
-          { title: "Payments Plan" },
-          { title: "Event count" },
-          { title: "People count" },
-          { title: "Success Count" },
-          { title: "Success %" },
-          { title: "SALE" },
+        "paging": true,
+        "pageLength": 5
 
-        ]
-      }
+        // columns: [
+        //   { title: "Payment Method" },
+        //   { title: "Event count" },
+        //   { title: "People count" },
+        //   { title: "Success Count" },
+        //   { title: "Success %" },
 
-    )
+
+        // ]
+
+      })
+
+    })
 
 
   }
@@ -40,99 +66,23 @@ export default class PlanpaymentTable extends Component {
     return (
       <div className="table-responsive">
         <table id="#accounts" className="display" width="100%" ref={el => this.el = el}>
-          <tbody>
-            <tr className="odd">
-              <td>Plan 1</td>
-              <td>20</td>
-              <td>5</td>
-              <td>10</td>
-              <td className="white-space">50%
-                <div className="progress">
-                  <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} style={{ width: '50%' }}>
-                    50%
-                  </div>
-                </div>
+                            <thead>
+                                <tr>
+                                      <th>Date</th>
+                                      <th>Payments Plan</th>
+                                      <th>Event count</th>
+                                      <th>People count"</th>
+                                      <th>Success Count</th>
+                                      <th>Success % </th>
+                                      <th>SALE</th>
+                                    </tr>
+                                 </thead>
+                                  <tbody class="payment_tbody">
+                                    
 
-              </td>
-              <td>5000</td>
-            </tr>
-            <tr>
-              <td>Plan 2</td>
-              <td>20</td>
-              <td>5</td>
-              <td>10</td>
-              <td className="white-space">50%
-                <div className="progress">
-                  <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} style={{ width: '50%' }}>
-                    50%
-                  </div>
-                </div>
+                                  </tbody>
 
-              </td>
-              <td>5000</td>
-            </tr>
-            <tr className="odd">
-              <td>Plan 3</td>
-              <td>20</td>
-              <td>5</td>
-              <td>10</td>
-              <td className="white-space">50%
-                <div className="progress">
-                  <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} style={{ width: '50%' }}>
-                    50%
-                  </div>
-                </div>
-
-              </td>
-              <td>5000</td>
-            </tr>
-            <tr>
-              <td>Plan 4</td>
-              <td>20</td>
-              <td>5</td>
-              <td>10</td>
-              <td className="white-space">50%
-                <div className="progress">
-                  <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} style={{ width: '50%' }}>
-                    50%
-                  </div>
-                </div>
-
-              </td>
-              <td>5000</td>
-            </tr>
-            <tr className="odd">
-              <td>Plan 5</td>
-              <td>20</td>
-              <td>5</td>
-              <td>10</td>
-              <td className="white-space">50%
-                <div className="progress">
-                  <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} style={{ width: '50%' }}>
-                    50%
-                  </div>
-                </div>
-
-              </td>
-              <td>5000</td>
-            </tr>
-            <tr>
-              <td>Plan 6</td>
-              <td>20</td>
-              <td>5</td>
-              <td>10</td>
-              <td className="white-space">50%
-                <div className="progress">
-                  <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} style={{ width: '50%' }}>
-                    50%
-                  </div>
-                </div>
-
-              </td>
-              <td>5000</td>
-            </tr>
-
-          </tbody>
+         
         </table>
       </div>
     )

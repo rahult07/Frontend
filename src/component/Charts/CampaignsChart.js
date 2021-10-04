@@ -1,141 +1,52 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react'; 
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import axios from 'axios';
 
 export default class CampaignsChart extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      impression_count: '0'
+    }
+  }
+
     componentDidMount() {
         am4core.useTheme(am4themes_animated);
         am4core.addLicense("CH258896422");
 
 // Create chart instance
 let chart = am4core.create("campaigns-chart", am4charts.XYChart);
+axios.get('http://10.0.0.238/icogz/appflyer').then((response) =>{
+  let date = response.data.data.data_query_set.all_data;
+  let date_count =response.data.data.data_query_set.all_data.length;
+  if(date !=undefined &&date!=null)
+  {
+    var data = [];
+            for (var i = 0; i < date_count; i++)
+            {
+               var info = {
+                "ax": date[i][1], 
+                "bx": 7000,
+                "cx": 8000,
+                "dx": 9000,
+                "ex": 10000,
 
+                "ay": 10,
+                "by": 20,
+                "cy": 30,
+                "dy": 40,
+                "ey": 50
+              };
+               data.push(info);
+            }
+            chart.data = data;
+  }
+})
 
 // Add data
-chart.data = [{
-   
-  "ax": 13, 
-  "bx": 10,
-  "cx": 24,
-  "dx": 20,
-  "ex": 34,
 
-  "ay": 30,
-  "by": 20,
-  "cy": 25,
-  "dy": 36,
-  "ey": 23
-  }, {
-    
-    "ax": 4,
-    "bx": 12,
-    "cx": 6,
-    "dx": 10,
-    "ex": 34,
-
-    "ay": 25,
-    "by": 39,
-    "cy": 20,
-    "dy": 42,
-    "ey": 30
-  }, {
-    "ax": 18,
-    "bx": 22,
-    "cx": 30,
-    "dx": 28,
-    "ex": 35,
-
-    "ay": 33,
-    "by": 20,
-    "cy": 18,
-    "dy": 41,
-    "ey": 47
-  }, {
-    "ax": 24,
-    "bx": 32,
-    "cx": 30,
-    "dx": 25,
-    "ex": 21,
-
-    "ay": 39,
-    "by": 43,
-    "cy": 50,
-    "dy": 26,
-    "ey": 55
-  }, {
-    "ax": 32,
-    "bx": 28,
-    "cx": 22,
-    "dx": 20,
-    "ex": 16,
-
-    "ay": 33,
-    "by": 29,
-    "cy": 43,
-    "dy": 51,
-    "ey": 18
-  }, {
-    "ax": 14,
-    "bx": 22,
-    "cx": 34,
-    "dx": 28,
-    "ex": 14,
-
-    "ay": 27,
-    "by": 43,
-    "cy": 48,
-    "dy": 31,
-    "ey": 24
-  }, {
-    "ax": 10,
-    "bx": 21,
-    "cx": 18,
-    "dx": 30,
-    "ex": 26,
-
-    "ay": 23,
-    "by": 40,
-    "cy": 31,
-    "dy": 29,
-    "ey": 44
-  }, {
-    "ax": 8,
-    "bx": 19,
-    "cx": 33,
-    "dx": 22,
-    "ex": 11,
-
-    "ay": 37,
-    "by": 43,
-    "cy": 25,
-    "dy": 34,
-    "ey": 13
-  }, {
-    "ax": 11,
-    "bx": 26,
-    "cx": 32,
-    "dx": 18,
-    "ex": 27,
-
-    "ay": 33,
-    "by": 26,
-    "cy": 47,
-    "dy": 52,
-    "ey": 38
-  }, {
-    "ax": 20,
-    "bx": 31,
-    "cx": 25,
-    "dx": 20,
-    "ex": 29,
-
-    "ay": 29,
-    "by": 35,
-    "cy": 42,
-    "dy": 31,
-    "ey": 23
-  }];
   
   // Create axes
   let xAxis = chart.xAxes.push(new am4charts.ValueAxis());
