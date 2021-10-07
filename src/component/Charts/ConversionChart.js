@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-
+import axios from 'axios';
 
 
 export default class ConversionChart extends Component {
@@ -13,6 +13,26 @@ export default class ConversionChart extends Component {
         am4core.useTheme(am4themes_animated);
         // Create chart instance
         let chart = am4core.create("conversion", am4charts.XYChart);
+        axios.get('http://10.0.0.238/icogz/appflyer').then((response) =>{
+            let table = response.data.data.line.data_line;
+            let table2 = response.data.data.line.data_line1;
+            var data =[];
+            for (var index in table) 
+            {
+                var list = table[index];
+                var list1 = table2[index];
+                 var info = {
+                    'date': list['date'],
+                    'value1':list['conversion_rate'],
+                    'previousDate': list1['pervious'],
+                    'value2':list1['conversion_rate']
+                };
+                data.push(info);
+
+            }
+            chart.data =data;
+
+        })
 
 // Add data
 chart.data = [
