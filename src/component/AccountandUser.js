@@ -137,9 +137,6 @@ export default class AccountandUser extends Component {
                                     {/* small box */}
                                     <div className="small-box bg-white">
                                         <div className="inner">
-                                            <p className="f-400 tx-small mg-b-0">Installs</p>
-                                            <h3 className="pd-t-10">150k <span class="badge bg-success text-success tx-small badge-span">5%</span></h3>
-
                                             <CardInstallsChart />
                                         </div>
                                     </div>
@@ -149,9 +146,6 @@ export default class AccountandUser extends Component {
                                     {/* small box */}
                                     <div className="small-box bg-white">
                                         <div className="inner">
-                                            <p className="f-400 tx-small mg-b-0">Uninstalls</p>
-                                            <h3 className="pd-t-10">10k <span class="badge bg-success text-success tx-small badge-span">5%</span></h3>
-
                                             <CardUninstallsChart />
                                         </div>
                                     </div>

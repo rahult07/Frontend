@@ -23,19 +23,28 @@ export default class SpendsBarChart extends Component {
 
     let chart = am4core.create("overview-spends", am4charts.XYChart);
     axios.get('http://10.0.0.238/icogz/appflyer').then((response) => {
-        let total_spend = response.data.data.data.spends_count
-        let achived = (total_spend*1.2)/100
-        let percent = total_spend.toFixed(2) /achived 
-        if(response.data.data.data.spends_count !=undefined &&response.data.data.data.spends_count!=null)
+        let total_spends = response.data.data.data.data_quary;
+        if(total_spends!=undefined&& total_spends!=null)
         {
-            this.setState({ spend_count: total_spend >100000? (total_spend/100000).toFixed(2) +'L' :total_spend });
-            chart.data = [{
-            "year": "2021",
-            "targeted":"100 %",
-            "achived" :percent
-          }];
+            var data =[];
+            let spends_count_total 
+            for (var index in total_spends) 
+            {
+                var list = total_spends[index];
+                spends_count_total = list['spends_count']
+                var info = {
+                    "year": list['year'].toString(),
+                    "targeted":"100 %",
+                    "achived" :list['achived_spends']
+                    };
+                    data.push(info);
+                //this.setState({ install_count: total_install >100000? (total_install/100000).toFixed(0) +'L' :total_install.toFixed(2) });
 
+            }
+            chart.data =data;
+            this.setState({ spend_count: spends_count_total >100000? (spends_count_total/100000).toFixed(0)+'L' :spends_count_total.toFixed(0) });
         }
+
     });
 
 

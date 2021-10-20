@@ -21,17 +21,34 @@ export default class InstallsBarChart extends Component {
 
         let chart = am4core.create("overview-installs", am4charts.XYChart);
         axios.get('http://10.0.0.238/icogz/appflyer').then((response) => {
-            let total_install = response.data.data.data_set.install_count
-            let achived = (total_install*1.2)/100
-            let percent = total_install /achived
-             if(response.data.data.data_set!=undefined&& response.data.data.data_set!=null)
+            let total_install = response.data.data.data.data_quary
+            //console.log('******************'+total_install);
+            //let year_date = response.data.data.data_quary.year
+             if(total_install!=undefined&& total_install!=null)
              {
-              this.setState({ install_count: response.data.data.data_set.install_count >100000? (response.data.data.data_set.install_count/100000).toFixed(2) +'L' :response.data.data.data_set.install_count.toFixed(2) });
-              chart.data = [{
-                "year": "2021",
-                "targeted":"100%",
-                "achived": percent
-             }];  
+              var data =[];
+              let install_count_total 
+              for (var index in total_install) 
+              {
+                var list = total_install[index];
+                install_count_total = list['install_count']
+                var info = {
+                  "year": list['year'].toString(),
+                  "targeted":"100 %",
+                  "achived" :list['achived_install']
+                };
+                data.push(info);
+                //this.setState({ install_count: total_install >100000? (total_install/100000).toFixed(0) +'L' :total_install.toFixed(2) });
+
+              }
+              chart.data =data;
+              //console.log('**************'+install_count_total);
+              this.setState({ install_count: install_count_total >100000? (install_count_total/100000).toFixed(0)+'L' :install_count_total.toFixed(0) });
+             //  chart.data = [{
+             //    "year": year_date.toString(),
+             //    "targeted":"100%",
+             //    "achived": percent
+             // }];  
             }
 
         });

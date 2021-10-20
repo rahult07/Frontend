@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-
+import axios from 'axios';
 
 export default class AppVersionPieChart extends Component {
     componentDidMount() {
@@ -13,25 +13,27 @@ export default class AppVersionPieChart extends Component {
 
       // Create chart instance
       let chart = am4core.create("apps-version-pie", am4charts.PieChart);
+      axios.get('http://10.0.0.238/icogz/clevertap').then((response) => {
+        let app_version = response.data.data.app_version.data;
+        if (app_version !=undefined &&app_version!=null)
+        {
+            var data =[];
+            for(var index in app_version)
+            {
+                var list = app_version[index];
+                var info={
+                    "plan": list['app_version'],
+                    "count": list['count_app_version']
+                };
+                data.push(info);
+            }
+            chart.data=data;
+        }
 
+
+      })
       // Add data
-      chart.data = [{
-        "plan": "A",
-        "count": 180
-      }, {
-        "plan": "B",
-        "count": 200
-      }, {
-        "plan": "C",
-        "count": 280
-      }, {
-        "plan": "D",
-        "count": 220
-      }, {
-        "plan": "E",
-        "count": 100
-      }
-      ];
+      chart.data = [{}];
 
 // Add and configure Series
 let pieSeries = chart.series.push(new am4charts.PieSeries());

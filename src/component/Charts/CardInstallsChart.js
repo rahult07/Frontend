@@ -10,6 +10,12 @@ am4core.useTheme(am4themes_animated);
 
 
 export default class CardInstallsChart extends Component {
+    constructor(props){
+    super(props);
+    this.state = {
+      install_count: '0'
+    }
+  }
   
 
     componentDidMount() {
@@ -17,6 +23,29 @@ export default class CardInstallsChart extends Component {
 
         // Create chart instance
         let chart = am4core.create("installs", am4charts.XYChart);
+        axios.get('http://10.0.0.238/icogz/clevertap').then((response) => {
+            let install = response.data.data.set_query.data_set;
+            let install_count_total = response.data.data.set_query.total_install
+            if (install !=undefined &&install!=null)
+            {
+                //console.log('>>>>>>>>>'+table);
+                var data =[];
+                for (var index in install)
+                {
+                    let list = install[index];
+                    //install_count_total = list['install_count']
+                    var info = {
+                        "date": list['date'],
+                        "value":list['install_count']
+                    };
+                    data.push(info);
+                }
+                chart.data =data;
+                //console.log('<<<<<<<<<<<<<<<'+install_count_total);
+                this.setState({ install_count: install_count_total >100000? (install_count_total/100000)+'L' :install_count_total });
+
+            }
+        })
         
      // Add data
      chart.data = [ {}];
@@ -74,8 +103,11 @@ chart.padding(0, 0, 0, 0);
 
     render() {
         return (
-            <div>         
-               <div id="installs" style={{ width: "100%", height: "60px" }} /> 
+
+            <div>
+                <p className="f-400 tx-small mg-b-0">Installs</p>
+                    <h3 className="pd-t-10">{this.state.install_count} <span class="badge bg-success text-success tx-small badge-span">5%</span></h3>         
+                        <div id="installs" style={{ width: "100%", height: "60px" }} /> 
             </div>
         )
     }

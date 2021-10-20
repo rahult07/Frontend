@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import axios from 'axios';
 
 export default class ModelPieChart extends Component {
     componentDidMount() {
@@ -12,26 +13,29 @@ export default class ModelPieChart extends Component {
 
      // Create chart instance
      let chart = am4core.create("model-pie", am4charts.PieChart);
+     axios.get('http://10.0.0.238/icogz/clevertap').then((response) => {
+        let model_name= response.data.data.model_name.all_model;
+        if (model_name !=undefined &&model_name!=null)
+        {
+            var data =[];
+            for(var index in model_name)
+            {
+                var list = model_name[index];
+                var info={
+                    "plan": list['models'],
+                    "count": list['count_model']
+                };
+                data.push(info);
+            }
+            chart.data=data;
+        }
+
+
+      })
 
          
 // Add data
-chart.data = [ {
- "plan": "Samsung",
- "count": 480.9
-}, 
-{
- "plan": "iPhone",
- "count": 380.9
-}, 
-{
-"plan": "OnePlus",
-"count": 260.9
-}, 
-{
- "plan": "Others",
- "count": 201.1
-}
-];
+chart.data = [ {}];
 
 // Add and configure Series
 let pieSeries = chart.series.push(new am4charts.PieSeries());

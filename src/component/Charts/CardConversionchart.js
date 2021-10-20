@@ -24,14 +24,11 @@ export default class CardConversionchart extends Component {
  let chart = am4core.create("conversioncard", am4charts.XYChart);
  axios.get('http://10.0.0.238/icogz/appflyer').then((response) => 
         {
-
-          let total_install_count = response.data.data.data_query_set.install_count
-          let total_click = response.data.data.data_query_set.click_count
           let date = response.data.data.data_query_set.all_data;
           let date_count =response.data.data.data_query_set.all_data.length;
-          let total_conversion = ((total_install_count *100) / total_click).toFixed(0)+'%'
+          let total_conversion = response.data.data.data_query_set.conversion_rate+'%'
           //alert(total_conversion)
-          if(total_install_count !=undefined &&total_install_count!=null)
+          if(total_conversion !=undefined &&total_conversion!=null)
           {
             this.setState({ conversion_count: total_conversion >100? (total_conversion/100) +'%' :total_conversion });
             var data = [];

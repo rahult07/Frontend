@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import axios from 'axios';
 
 export default class DevicePieChart extends Component {
     componentDidMount() {
@@ -13,23 +14,29 @@ export default class DevicePieChart extends Component {
 
       // Create chart instance
       let chart = am4core.create("device-pie", am4charts.PieChart);
+      axios.get('http://10.0.0.238/icogz/clevertap').then((response) => {
+        let device= response.data.data.device.device_data;
+        if (device !=undefined &&device!=null)
+        {
+            var data =[];
+            for(var index in device)
+            {
+                var list = device[index];
+                var info={
+                    "plan": list['device'],
+                    "count": list['count_device']
+                };
+                data.push(info);
+            }
+            chart.data=data;
+        }
+
+
+      })
 
           
 // Add data
-chart.data = [ {
-  "plan": "Smartphone",
-  "count": 350
-}, {
-  "plan": "Tablet",
-  "count": 250
-}, {
-  "plan": "Desktop",
-  "count": 230
-}, {
-    "plan": "TV",
-    "count": 100
-  }
-];
+chart.data = [ {}];
 
 // Add and configure Series
 let pieSeries = chart.series.push(new am4charts.PieSeries());
