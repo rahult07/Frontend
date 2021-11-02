@@ -86,7 +86,7 @@ chart.padding(0, 0, 0, 0);
    render() {
        return (
            <div>
-                 <div id="model-pie" style={{ width: "100%", height: "200px" }} />
+                 <div id="model-pie" style={{ width: "100%", height: "400px" }} />
            </div>
        )
    }

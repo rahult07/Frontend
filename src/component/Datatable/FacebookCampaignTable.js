@@ -7,7 +7,7 @@ export default class FacebookCampaignTable extends Component {
     componentDidMount() {
        
       //  ,{ params: {Media_Source: 'Facebook' }}
-      axios.get('http://10.0.0.238/icogz/appflyer',{ params: {Media_Source: 'Facebook' }}).then((response) => {
+      axios.get('http://10.0.0.238/icogz/appflyer',{ params: { Media_Source: "('Facebook')" } }).then((response) => {
           let table = response.data.data.table.table_data;
           //console.log('params :-'+table);
           //console.log('here is table :-'+table);
@@ -33,6 +33,7 @@ export default class FacebookCampaignTable extends Component {
           for(var index in table) {
             //console.log("=========", table[index]);
             var list = table[index]
+            //console.log('>>><<<<<<<<<<<<'+list);
             var tr = '<tr>';
                 tr += '<td>'+list['date']+'</td>';       
                 tr += '<td>'+list['campaign']+'</td>';       
